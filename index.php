@@ -5,12 +5,6 @@
 
 	function genHash($sid, $time, $total, $currency, $rcode)
 	{
-		$ooo = [$sid, $time, $total, $currency, $rcode];
-
-		echo '<pre>';
-		print_r($ooo);
-		echo '</pre>';
-
 		return md5($sid . $time . $total . $currency . $rcode);
 	}
 
@@ -39,7 +33,7 @@
 	$option = [
 		'tid' => 84,
 
-		'postback_url' => 'http://txfunds1.aunn.dev.ipo-servers.net%2Fpostback%2Ftxprocess.php',
+		'postback_url' => 'http://txfunds1.aunn.dev.ipo-servers.net/postback/txprocess.php',
 		'redirect_url' => 'http://txfunds1.aunn.dev.ipo-servers.net/deposit/return.php',
 		//'hash' => genHash($gateway->getSid(), $time, $total, $currency, $gateway->getRcode()),
 		'timestamp' => $time,
@@ -94,6 +88,6 @@
 		'ref4' => 'txprocess-84',
 	]; 
 
-	echo genHash($gateway->getSid(), $time, $total, $currency, $gateway->getRcode()) . '||||';
+	echo md5('113927864032.02USD84');
 
 	$gateway->payment($option)->send();

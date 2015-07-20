@@ -12,39 +12,8 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return 'POST';
     }
 
-    /*public function sendData($data)
-    {
-        $this->httpClient->getEventDispatcher()->addListener(
-            'request.error',
-            function ($event) {
-                if ($event['response']->isClientError()) {
-                    $event->stopPropagation();
-                }
-            }
-        );
-
-        $httpRequest = $this->httpClient->createRequest(
-            $this->getHttpMethod(),
-            $this->getEndpoint(),
-            null,
-            $data
-        );
-        $httpResponse = $httpRequest
-            ->setHeader('Authorization', 'Basic '.base64_encode($this->getApiKey().':'))
-            ->send();
-
-        return $this->response = new Response($this, $httpResponse->json());
-    }*/
-
     public function sendData($data)
     {
-//        echo $this->getEndpoint() . PHP_EOL;
-        /*echo 'from sendData' . PHP_EOL;
-
-        echo '<PRE>';
-        print_r($data);
-        echo '</pre>';*/
-
         $httpRequest = $this->httpClient->createRequest(
             $this->getHttpMethod(),
             $this->getEndpoint(),
@@ -53,13 +22,15 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         );
 
         $httpResponse = $httpRequest->send();
+        $this->response = new Response($this, $httpResponse->getBody());
 
-        //var_dump($httpResponse->getBody());
-        //echo '<BR>';
+        var_dump($this->response->isRedirect());
 
         echo '<pre>';
-        echo htmlspecialchars($httpResponse->getBody());
+        echo htmlspecialchars($this->response->getData());
         echo '</pre>';
+
+        return $this->response;
     }
 
     //// TODO : add throw when send incorrect item data
@@ -85,13 +56,6 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
     public function generateHash($total)
     {
-        $ooo = [$this->getSid(), $this->getTimestamp(), number_format($total, 2, '.', ''), $this->getCurrency(), $this->getRcode()];
-
-        echo '<pre>';
-        echo $this->getCurrency();
-        print_r($ooo);
-        echo '</pre>';
-
         return md5($this->getSid() . $this->getTimestamp() . number_format($total, 2, '.', '') . $this->getCurrency() . $this->getRcode());
     }
 
