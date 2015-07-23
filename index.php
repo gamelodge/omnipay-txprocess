@@ -88,6 +88,14 @@
 		'ref4' => 'txprocess-84',
 	]; 
 
-	echo md5('113927864032.02USD84');
+	$response = $gateway->payment($option)->send();
 
-	$gateway->payment($option)->send();
+	if($response->isSuccessful()) {
+		$response->redirect();	
+	}
+	else
+	{
+		echo $response->getErrorMessage();
+	}
+
+	

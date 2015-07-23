@@ -24,12 +24,6 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         $httpResponse = $httpRequest->send();
         $this->response = new Response($this, $httpResponse->getBody());
 
-        var_dump($this->response->isRedirect());
-
-        echo '<pre>';
-        echo htmlspecialchars($this->response->getData());
-        echo '</pre>';
-
         return $this->response;
     }
 
