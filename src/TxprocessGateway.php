@@ -25,7 +25,29 @@ class TxprocessGateway extends AbstractGateway {
         );
     }
     
-   
+   public function buildItems(&$params)
+    {
+        if(!isset($params['items']))
+        {
+            $items= array();
+            foreach($params['item_quantity'] as $index => $val) {
+                $items['quantity'] = $params['item_quantity'][$index];
+                $items['name'] = $params['item_name'][$index];
+                $items['no'] = $params['item_no'][$index];
+                $items['desc'] = $params['item_desc'][$index];
+                $items['amount_unit'] = $params['item_amount_unit'][$index];
+                $params['items'][] = $items;
+            }
+             //unset the item_ array items 
+            unset($params['item_quantity']);
+            unset($params['item_name']);
+            unset($params['item_no']);
+            unset($params['item_desc']);
+            unset($params['item_amount_unit']);
+            
+        }
+       
+    }
 
     /**
      * @param array $parameters
@@ -36,5 +58,13 @@ class TxprocessGateway extends AbstractGateway {
         return $this->createRequest('\Omnipay\Txprocess\Message\FetchTransactionRequest', $parameters);
     }
 
+    
+    public function purchase(array $parameters = array()) {
+        $this->buildItems($parameters);
+        
+        $request = $this->createRequest('\Omnipay\Txprocess\Message\SoapRequest', $parameters);
+
+        return $request;
+    }
     
 }

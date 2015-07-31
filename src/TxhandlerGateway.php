@@ -57,7 +57,7 @@ class TxhandlerGateway extends AbstractGateway  {
     
     public function getCardFields()
     {
-        $fields = $this->getParameters();
+       // $fields = $this->getParameters();
         $fields['card_type'] = array('visa','mastercard');
         $fields['card_no'] = '';
         $fields['card_name'] = '';
@@ -69,7 +69,7 @@ class TxhandlerGateway extends AbstractGateway  {
    
     public function getBankFields()
     {
-        $fields = $this->getParameters();              
+      //  $fields = $this->getParameters();              
         $fields['card_type'] = 'bank';
         $fields['routing_no'] ='';
         $fields['account_no'] = '';
@@ -121,11 +121,4 @@ class TxhandlerGateway extends AbstractGateway  {
         return $request;
     }
 
-    public function soappayment(array $parameters = array()) {
-        $this->buildItems($parameters);
-       
-        $request = $this->createRequest('\Omnipay\Txprocess\Message\SoapRequest', $parameters);
-
-        return $request;
-    }
 }
