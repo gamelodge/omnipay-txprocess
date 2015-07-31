@@ -1,9 +1,10 @@
 {
     "autoload": {
-        "psr-4": { "Omnipay\\Txprocess\\" : "src/" }
+        "psr-4": { "Omnipay\\Txprocess\\" : "src/"        }
     },
     "require": {
         "omnipay/common": "~2.0",
+        "omnipay/paypal": "~2.0",
         "sunra/php-simple-html-dom-parser": "v1.5.0"
     },
     "require-dev": {

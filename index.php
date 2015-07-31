@@ -1,101 +1,97 @@
 <?php
+require_once "vendor/autoload.php";
+use Omnipay\Omnipay;
 
-	require_once "vendor/autoload.php";
-	use Omnipay\Omnipay;
+if($_POST)
+{
+    //create gateway from the hidden variable value
+    $gateway = Omnipay::create($_POST['gw']);
+    //unset the gateway name from the list of params
+   // unset($_POST['gw']);
+    //copy post varaibles to params
+    $params = $_POST;
+    if($_POST['gw'] == 'Txprocess_Txprocess')
+    {
+        
+        $request = $gateway->fetchTransaction($params);
+        $request->setPtxid($_POST['ptxid']);
+        $response = $request->send();
+        print_r($response->getData());
+        exit;
+    }
+    
+try {
+    
+    $response = $gateway->purchase($params)->send();
 
-	function genHash($sid, $time, $total, $currency, $rcode)
-	{
-		return md5($sid . $time . $total . $currency . $rcode);
-	}
+    if ($response->isRedirect()) {
 
-	$gateway = Omnipay::create('Txprocess');
-	$gateway->setSid(1);
-	$gateway->setRcode('9ff1a10f0a09b9388b5664f2dc1001e748c5b999');
+            $response->redirect();
+        }
+     else {
+        // display error to customer
+        exit($response->getMessage());
+    }
+} catch (\Exception $e) {
+    // internal error, log exception and display a generic message to the customer
+    exit('Sorry, there was an error processing your payment. Please try again later.'.$e->getMessage());
+}
+    
+}
 
-	$time = time();
-	$total = '10.00';
-	$currency = 'USD';
+?>
+<html>
+    <head>Gateways</head>
+    <body>
+        <ul>
+            <li><a href="index.php?gw=Txprocess_Txhandler&type=card">TxHandler(Card payment)</a>
+                <li><a href="index.php?gw=Txprocess_Txhandler&type=bank">TxHandler(Bank payment)</a>
+            <li><a href="index.php?gw=Txprocess_Txprocess">TxProcess</a>
+            <li><a href="index.php?gw=PayPal_Express">Paypal Express</a>
+            <li><a href="index.php?gw=PayPal_Rest">Paypal Rest</a>
+        </ul>
+        <form name="postform" action="" method="post">
+            <input type="hidden" name="gw"  value="<?=$_GET['gw']?$_GET['gw']:''?>" />
+<?php
+if ($_GET['gw']) {
 
-	$items[] = [
-		'quantity' => 1,
-		'name' =>'Depositing 10.00 USD',
-		'no' => 'DEP',
-		'desc' => 'DemoUSD Account(58390921)',
-		'amount_unit' => '10.00',
-	];
 
-	/*'item_quantity[0]' => 1,
-	'item_name[0]' => 'Depositing 10.00 USD',
-	'item_no[0]' => 'DEP',
-	'item_desc[0]' => 'DemoUSD Account(58390921)',
-	'item_amount_unit[0]' => '10.00',*/
+    $gatewayname = $_GET['gw'];
 
-	$option = [
-		'tid' => 84,
+    $gateway = Omnipay::create($gatewayname);
+    $gateway->initialize();
+   
+    if(isset($_GET['type']))
+    {
+        if($_GET['type'] =='card')
+        {
+        $fields = $gateway->getCardFields();
+        }
+        elseif($_GET['type'] =='bank')
+        {
+            $fields = $gateway->getBankFields();
+        }
+         
+    }
+    else
+    {
+        $fields = $gateway->getParameters();
+    }
+    foreach ($fields as $key=>$val)
+    {
+        ?>
+         <div class="control-group">
+                <label class="control-label" for="gateway_<?=$key?>"><?=$key?></label>
+                <div class="controls">
+                    <input type="text" name="<?=$key?>" id="gateway_<?=$key?>" value="<?=$val?>" />
+                </div>
+            </div>
+        <?php
+    }
+}
+?>
+             <div class="form-actions"><button type="submit" class="btn">Submit</button></div>
+        </form>
+    </body>
+</html>
 
-		'postback_url' => 'http://txfunds1.aunn.dev.ipo-servers.net/postback/txprocess.php',
-		'redirect_url' => 'http://txfunds1.aunn.dev.ipo-servers.net/deposit/return.php',
-		//'hash' => genHash($gateway->getSid(), $time, $total, $currency, $gateway->getRcode()),
-		'timestamp' => $time,
-
-		'card_type' => 'visa',
-		'card_name' => 'Name Surname',
-		'card_no' => '4556334519878501',
-		'card_ccv' => 159,
-		'card_exp_month' => 10,
-		'card_exp_year' => 2018,
-
-		'bank_name' => 'bank_name',
-		'bank_phone' => 'bank_phone',
-
-		'username' => 'username',
-		'password' => 'password',
-
-		'firstname' => 'pang',
-		'lastname' => 'kaka',
-		'phone' => '0892398710',
-		'email' => 'aunn_it08@hotmail.com',
-		'mobile' => 'mobile',
-
-		'address' => '',
-		'suburb_city' => '',
-		'state' => '',
-		'postcode' => '',
-		'country' => '',
-
-		'shipping_firstname' => 'shipping_firstname',
-		'shipping_lastname' => 'shipping_lastname',
-		'shipping_address' => 'shipping_address',
-		'shipping_suburb_city' => 'shipping_suburb_city',
-		'shipping_state' => 'shipping_state',
-		'shipping_postcode' => 'shipping_postcode',
-		'shipping_country' => 'shipping_country',
-
-		'currency' => $currency,
-		'amount_shipping' => 0,
-		'amount_coupon' => 0, 	//optional
-		'amount_tax' => 0,
-		'tx_action' => 'PAYMENT',
-		
-		'items' => $items,
-		
-		'campaignid[0]' => 1,
-		'affiliateid' => 1,
-		
-		'ref1' => 'txprocess-84',
-		'ref2' => 'txprocess-84',
-		'ref3' => 'txprocess-84',
-		'ref4' => 'txprocess-84',
-	]; 
-
-	$response = $gateway->payment($option)->send();
-
-	if($response->isSuccessful()) {
-		$response->redirect();	
-	}
-	else
-	{
-		echo $response->getErrorMessage();
-	}
-
-	
