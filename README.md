@@ -47,6 +47,21 @@ Previous index file is renamed as testtxhandlerpayment.php
 
     ```php
         $params = array(
+        'sid' => '1',
+        'rcode' => '9ff1a10f0a09b9388b5664f2dc1001e748c5b999'
+        )
+        $gateway = Omnipay::create('Txprocess_Txprocess');
+        $request = $gateway->fetchTransaction($params);
+        $request->setPtxid('1438230307786939'); //parent txid
+        $response = $request->send();
+        print_r($response->getData());
+
+    ```php
+
+###Make payment transaction status using new api
+
+    ```php
+        $params = array(
             'sid' => '1',
             'rcode' => '9ff1a10f0a09b9388b5664f2dc1001e748c5b999',                        
             'postback_url' => 'http://yourwebsite.com/postback.php',
@@ -77,22 +92,7 @@ Previous index file is renamed as testtxhandlerpayment.php
             'item_amount_unit[]' => '5.20',
             'tid' => '123',
             'tx_action' => 'PAYMENT');
-
-        $gateway = Omnipay::create('Txprocess_Txprocess');
-        $request = $gateway->fetchTransaction($params);
-        $request->setPtxid($ptxid); //parent txid
-        $response = $request->send();
-        print_r($response->getData());
-
-    ```php
-
-###Make payment transaction status using new api
-
-    ```php
-        $params = array(
-        'sid' => '1',
-        'rcode' => '92202020202020202022'
-        )
+        
         $gateway = Omnipay::create('Txprocess_Txprocess');
         $response = $gateway->purchase($params)->send();
         print_r($response->getData());
