@@ -3,15 +3,18 @@ Previous index file is renamed as testtxhandlerpayment.php
 
 
 To get Txhandler fields (card payment)
-```php
+<pre>
+`
     $gateway = Omnipay::create('Txprocess_Txhandler');
     $gateway->initialize();
     $default = $gateway->getParameters();
     $card = $gateway->getCardFields();
      $fields = array_merge($default,$fields);
-```php
+`
+</pre>
 
 To get Txhandler fields (bank payment)
+<pre>
 ```php
     $gateway = Omnipay::create('Txprocess_Txhandler');
     $gateway->initialize();
@@ -19,8 +22,10 @@ To get Txhandler fields (bank payment)
     $card = $gateway->getBankFields();
     $fields = array_merge($default,$fields);
 ```php
+</pre>
 To make a direct payment using secure/txhandler
-    _params are the field for your payment type_
+    __params are the field for your payment type__
+<pre>
 ```php
     $gateway = Omnipay::create('Txprocess_Txhandler');
     $response = $gateway->purchase($params)->send();
@@ -34,8 +39,9 @@ To make a direct payment using secure/txhandler
         exit($response->getMessage());
     }
 ```php
-
+</pre>
 To get the transaction status using new api
+<pre>
 ```php
         $params = array(
         'sid' => '1',
@@ -47,3 +53,4 @@ To get the transaction status using new api
         $response = $request->send();
         print_r($response->getData());
 ```php
+</pre>
