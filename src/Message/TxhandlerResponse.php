@@ -11,7 +11,7 @@ class TxhandlerResponse extends AbstractResponse
         if(!$this->isRedirect())
             throw new RuntimeException('This response does not support redirection.');
 
-        $output = $this->getData();
+        $output = json_encode($this->getData());
         return HttpResponse::create($output);
     }
     public function isSuccessful()
@@ -23,4 +23,9 @@ class TxhandlerResponse extends AbstractResponse
         return true;
     }
    
+     public function getData()
+    {
+        return json_encode($this->data);
+    }
+    
 }
