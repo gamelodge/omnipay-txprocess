@@ -1,4 +1,5 @@
 {
+    "minimum-stability": "dev",
     "name":"gamelodge/omnipay-txprocess",
     "version": "1.0.0",
     "autoload": {
