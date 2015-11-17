@@ -1,4 +1,5 @@
 {
+    "name":"gamelodge/omnipay-txprocess",
     "version": "1.0.0",
     "autoload": {
         "psr-4": { "Omnipay\\Txprocess\\" : "src/"        }
