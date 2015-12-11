@@ -1,6 +1,8 @@
 # TxprocessTxhandler
 Previous index file is renamed as testtxhandlerpayment.php
-
+** Please remember to change the url to the correct txprocess in files 
+src/Message/AbstractRequest
+src/Message/TxhandlerRequest
 
 ###To get Txhandler fields (card payment)
 
@@ -85,11 +87,11 @@ Previous index file is renamed as testtxhandlerpayment.php
             'amount_shipping' => '0.02',
             'amount_coupon' => '0.00',
             'amount_tax' => '0.00',
-            'item_quantity[]' => '1',
-            'item_name[]' => 'apple',
-            'item_no[]' => 'a234',
-            'item_desc[]' => 'juicy green apple',
-            'item_amount_unit[]' => '5.20',
+            'item_quantity' => array('1'),
+            'item_name' => array('apple'),
+            'item_no' => array('a234'),
+            'item_desc' => array('juicy green apple'),
+            'item_amount_unit' => array('5.20'),
             'tid' => '123',
             'tx_action' => 'PAYMENT');
         
