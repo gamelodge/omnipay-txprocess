@@ -5,7 +5,7 @@ namespace Omnipay\Txprocess\Message;
 //// TODO : don't forget campaignid[]
 abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 {
-    protected $endpoint = 'http://txprocess.geena.dev.ipo-servers.net/api/api.php/';
+    protected $endpoint = 'http://txprocess.uat.ipayoptions.com/api/api.php/';
 
     
     public function getHttpMethod()
