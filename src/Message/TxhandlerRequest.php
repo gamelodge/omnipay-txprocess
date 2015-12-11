@@ -6,7 +6,7 @@ class TxhandlerRequest extends AbstractRequest
 {
 	public function getEndpoint()
     {
-        return 'http://txprocess.geena.dev.ipo-servers.net/secure/txHandler.php';
+        return 'http://txprocess.uat.ipayoptions.com/secure/txHandler.php';
     }
     //// TODO : add throw when send incorrect item data
     public function getData()
