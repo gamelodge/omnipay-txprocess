@@ -93,14 +93,12 @@ class CardPurchaseRequest extends AbstractRequest
             "mastercard" => "(5[1-5]\d{14})",
             "switch" => "(?:(?:(?:4903|4905|4911|4936|6333|6759)\d{12})|(?:(?:564182|633110)\d{10})(\d\d)?\d?)",
         );
-        $names = array("Visa", "American Express", "JCB", "Maestro", "Solo", "Mastercard", "Switch");
+//        $names = array("Visa", "American Express", "JCB", "Maestro", "Solo", "Mastercard", "Switch");
         $matches = array();
         $pattern = "#^(?:".implode("|", $cards).")$#";
-        $result = preg_match($pattern, str_replace(" ", "", $cc), $matches);
-        if($extra_check && $result > 0){
-            $result = (validatecard($cc))?1:0;
-        }
-        return ($result>0)?$names[sizeof($matches)-2]:false;
+        $result = preg_match($pattern, str_replace(" ", "", $number), $matches);
+        
+        return ($result>0)?true:false;
    }
 
 }
