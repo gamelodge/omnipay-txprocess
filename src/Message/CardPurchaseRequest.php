@@ -62,7 +62,7 @@ class CardPurchaseRequest extends AbstractRequest
         $data = parent::getData();
         $card = $this->getCard();
         $card->validate();
-        if ($this->LuhnCheckCardNumber($this->getNumber())) {
+        if ($this->LuhnCheckCardNumber($card->getNumber())) {
             throw new InvalidCreditCardException('Card number is invalid');
         }
         $type = $card->getBrand()? $card->getBrand() : 'visa';
