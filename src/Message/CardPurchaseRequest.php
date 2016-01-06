@@ -61,7 +61,7 @@ class CardPurchaseRequest extends AbstractRequest
         $data = parent::getData();
         $card = $this->getCard();
         $card->validate();
-        $this->validate('card', $card);
+        $this->validate('card');
         $type = $card->getBrand()? $card->getBrand() : 'visa';
         
       
