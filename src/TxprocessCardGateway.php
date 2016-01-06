@@ -21,7 +21,7 @@ class TxprocessCardGateway extends TxprocessGateway {
      */
     public function purchase(array $parameters = array())
     {
-        return $this->createRequest('\Txfunds\OmnipayBundle\Txprocess\Message\CardPurchaseRequest', $parameters);
+        return $this->createRequest('\Omnipay\Txprocess\Message\CardPurchaseRequest', $parameters);
     }
     
     

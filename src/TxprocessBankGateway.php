@@ -22,7 +22,7 @@ class TxprocessBankGateway extends TxprocessGateway {
      */
     public function purchase(array $parameters = array())
     {
-        return $this->createRequest('\Txfunds\OmnipayBundle\Txprocess\Message\BankPurchaseRequest', $parameters);
+        return $this->createRequest('\Omnipay\Txprocess\Message\BankPurchaseRequest', $parameters);
     }
     
     
