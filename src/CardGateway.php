@@ -5,13 +5,12 @@ namespace Omnipay\Txprocess;
 /**
  * make payment through the swagger api
  */
-class TxprocessBankGateway extends TxprocessGateway {
+class CardGateway extends TxprocessGateway {
     
      public function getName() {
-        return 'TxprocessBank';
+        return 'TxprocessCard';
     }
 
-   
     /**
      * Create a purchase request.
      *
@@ -22,7 +21,7 @@ class TxprocessBankGateway extends TxprocessGateway {
      */
     public function purchase(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\Txprocess\Message\BankPurchaseRequest', $parameters);
+        return $this->createRequest('\Omnipay\Txprocess\Message\CardPurchaseRequest', $parameters);
     }
     
     
