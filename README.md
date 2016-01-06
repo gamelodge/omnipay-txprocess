@@ -1,8 +1,3 @@
-# TxprocessTxhandler
-Previous index file is renamed as testtxhandlerpayment.php
-** Please remember to change the url to the correct txprocess in files 
-src/Message/AbstractRequest
-src/Message/TxhandlerRequest
 
 ###To use TxProcessCard (card payment)
 
