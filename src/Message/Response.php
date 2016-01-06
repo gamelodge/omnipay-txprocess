@@ -6,18 +6,17 @@ namespace Omnipay\Txprocess\Message;
 
 Class Response extends \Omnipay\Common\Message\AbstractResponse
 {
-   
+        
      public function getRedirectResponse()
     {
         if(!$this->isRedirect())
             throw new RuntimeException('This response does not support redirection.');
-
         $output = json_encode($this->getData());
         return HttpResponse::create($output);
     }
     
     public function isSuccessful()
-    {
+    {   
         if($this->data['status'] == 'OK')
             return true;
         else 
@@ -35,7 +34,7 @@ Class Response extends \Omnipay\Common\Message\AbstractResponse
     
     public function getData()
     {
-        return json_encode($this->data);
+        return $this->data;
     }
     
 }

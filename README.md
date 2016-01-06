@@ -4,98 +4,72 @@ Previous index file is renamed as testtxhandlerpayment.php
 src/Message/AbstractRequest
 src/Message/TxhandlerRequest
 
-###To get Txhandler fields (card payment)
+###To use TxProcessCard (card payment)
 
-    `
-        $gateway = Omnipay::create('Txprocess_Txhandler');
+     ```php
+        // Initialise the gateway
+        $gateway = Omnipay::create('TxProcessCard');
         $gateway->initialize();
-        $default = $gateway->getParameters();
-        $card = $gateway->getCardFields();
-        $fields = array_merge($default,$fields);
-    `
-
-
-###To get Txhandler fields (bank payment)
-
-    ```php
-    $gateway = Omnipay::create('Txprocess_Txhandler');
-    $gateway->initialize();
-    $default = $gateway->getParameters();
-    $card = $gateway->getBankFields();
-    $fields = array_merge($default,$fields);
-    ```php
-
-
-###To make a direct payment using secure/txhandler
-    __params are the fields for your payment type__
-
-
-    ```php
-        $gateway = Omnipay::create('Txprocess_Txhandler');
-        $response = $gateway->purchase($params)->send();
-
-        if ($response->isRedirect()) {
-
-                $response->redirect();
-            }
-         else {
-            // display error to customer
-            exit($response->getData());
-        }
-    ```php
-
-
-###To get the transaction status using new api
-
-    ```php
-        $params = array(
-        'sid' => '1',
-        'rcode' => '9ff1a10f0a09b9388b5664f2dc1001e748c5b999'
-        )
-        $gateway = Omnipay::create('Txprocess_Txprocess');
-        $request = $gateway->fetchTransaction($params);
-        $request->setPtxid('1438230307786939'); //parent txid
+        $gateway->setSid('2010');
+        $gateway->setRcode('zxcasdqwer');
+      
+        // Do a purchase transaction on the gateway
+        $request = $gateway->purchase(array(
+            'amount'            => '10.00',
+            'currency'          => 'AUD',
+            'card'              => array(
+                                     'name'=>'Simon Smith',
+                                     'number'=>'4222222222222222',
+                                     'expiryMonth'=>'06',
+                                    'expiryYear'=>'2019',
+                                    'cvv'=>'125'
+                                ),
+            'tid'=> 123, 
+            'transactionReference'=> 'payin-45',
+            'returnUrl' = 'xxxx', 
+            'firstName' = 'asd', 
+            'lastName' = 'zxc',
+            'email' = 'email@zyz',
+            'phone' = '123456',
+            'mobile' = '789456'                    
+        ));
+ 
         $response = $request->send();
-        print_r($response->getData());
+        if ($response->isSuccessful()) {
+            echo "Purchase transaction was successful!\n";
+        }
 
     ```php
 
-###Make payment transaction status using new api
+
+###To get TxProcessBank (make a direct payment)
 
     ```php
-        $params = array(
-            'sid' => '1',
-            'rcode' => '9ff1a10f0a09b9388b5664f2dc1001e748c5b999',                        
-            'postback_url' => 'http://yourwebsite.com/postback.php',
-            'timestamp' => '123456789',
-            'card_type' => 'visa',
-            'card_name' => 'Mike mustermann',
-            'card_no' => '4111111111111111',
-            'card_ccv' => '001',
-            'card_exp_month' => '05',
-            'card_exp_year' => '2018',
-            'firstname' => 'Mike',
-            'lastname' => 'Mustermann',
-            'email' => 'mike@mustermann.com',
-            'phone' => '1234567890',
-            'currency' => 'USD',
-            'address' => '12 Test Lane',
-            'suburb_city' => 'Testville',
-            'state' => 'TS',
-            'postcode' => '12345',
-            'country' => 'US',
-            'amount_shipping' => '0.02',
-            'amount_coupon' => '0.00',
-            'amount_tax' => '0.00',
-            'item_quantity' => array('1'),
-            'item_name' => array('apple'),
-            'item_no' => array('a234'),
-            'item_desc' => array('juicy green apple'),
-            'item_amount_unit' => array('5.20'),
-            'tid' => '123',
-            'tx_action' => 'PAYMENT');
-        
-        $gateway = Omnipay::create('Txprocess_Txprocess');
-        $response = $gateway->purchase($params)->send();
-        print_r($response->getData());
+        $gateway = Omnipay::create('TxProcessBank');
+        $gateway->initialize();
+        $gateway->setSid('2010');
+        $gateway->setRcode('zxcasdqwer');
+      
+        // Do a purchase transaction on the gateway
+        $request = $gateway->purchase(array(
+            'amount'            => '10.00',
+            'currency'          => 'AUD',            
+            'tid'=> 123, 
+            'transactionReference'=> 'payin-45',
+            'returnUrl' = 'xxxx', 
+            'firstName' = 'asd', 
+            'lastName' = 'zxc',
+            'email' = 'email@zyz',
+            'phone' = '123456',
+            'mobile' = '789456',
+            ..
+            BANK_FORM_DATA_HERER
+        ));
+ 
+        $response = $request->send();
+        if ($response->isSuccessful()) {
+            echo "Purchase transaction was successful!\n";
+        }
+
     ```php
+
