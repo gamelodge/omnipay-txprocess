@@ -3,7 +3,7 @@
 namespace Omnipay\Txprocess;
 
 /**
- * make payment through the swagger api
+ * make payment through the txprocess api
  */
 class CardGateway extends TxprocessGateway {
     
