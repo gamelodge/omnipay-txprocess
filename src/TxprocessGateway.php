@@ -4,7 +4,7 @@ namespace Omnipay\Txprocess;
 
 use Omnipay\Common\AbstractGateway;
 /**
- * make payment through the swagger api
+ * make payment through the txprocess api
  */
 class TxprocessGateway extends AbstractGateway {
     
