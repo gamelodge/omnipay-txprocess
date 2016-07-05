@@ -37,7 +37,7 @@
     ```php
 
 
-###To get TxProcessBank (make a direct payment)
+###To get TxProcessBank (make a bank payment)
 
     ```php
         $gateway = Omnipay::create('TxProcessBank');
