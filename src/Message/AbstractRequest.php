@@ -14,7 +14,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
      */
     public function getEndpoint()
     {
-        return $this->endpoint;
+         return $this->getParameter('endpoint');
     }
     
     
@@ -25,7 +25,8 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
      */
     public function setEndpoint($endpointURL)
     {
-         $this->endpoint = $endpointURL.'/secure/txHandler.php';
+         $this->setParameter('endpoint', $endpointURL);
+
     }
     
     public function getHttpMethod()
