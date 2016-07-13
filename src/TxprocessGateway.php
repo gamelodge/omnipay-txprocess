@@ -31,7 +31,7 @@ class TxprocessGateway extends AbstractGateway {
   
     public function setEndpoint($value)
     {
-        return $this->setParameter('endpoint', $value.'/secure/txHandler.php');
+         $this->setParameter('endpoint', $value.'/secure/txHandler.php');
     }
     
     public function getSid()
@@ -40,7 +40,7 @@ class TxprocessGateway extends AbstractGateway {
     }
     public function setSid($value)
     {
-        return $this->setParameter('sid', $value);
+         $this->setParameter('sid', $value);
     }
     public function getRcode()
     {
@@ -48,7 +48,7 @@ class TxprocessGateway extends AbstractGateway {
     }
     public function setRcode($value)
     {
-        return $this->setParameter('rcode', $value);
+         $this->setParameter('rcode', $value);
     }
      public function getPtxid()
     {
@@ -56,7 +56,7 @@ class TxprocessGateway extends AbstractGateway {
     }
     public function setPtxid($value)
     {
-        return $this->setParameter('ptxid', $value);
+         $this->setParameter('ptxid', $value);
     }
     
     public function setPaymethod($value)
