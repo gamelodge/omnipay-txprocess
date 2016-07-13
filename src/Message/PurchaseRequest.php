@@ -20,7 +20,7 @@ class PurchaseRequest extends AbstractRequest
      */
     public function getEndpoint()
     {
-        return 'http://txprocess.uat.ipayoptions.com/secure/txHandler.php';
+        return $this->getGatewayURI().'/secure/txHandler.php';
     }
     
      public function getData()
