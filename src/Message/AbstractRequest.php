@@ -5,7 +5,7 @@ namespace Omnipay\Txprocess\Message;
 //// TODO : don't forget campaignid[]
 abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 {
-    protected $endpoint = 'http://txprocess.uat.ipayoptions.com/api/api.php/';
+    protected $endpoint = 'http://txprocess.uat.ipayoptions.com/secure/txHandler.php';
 
      /**
      * Get transaction endpoint.
@@ -14,9 +14,19 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
      */
     public function getEndpoint()
     {
-        return 'http://txprocess.uat.ipayoptions.com/secure/txHandler.php';
+        return $this->endpoint;
     }
     
+    
+     /**
+     * Set transaction endpoint.
+     *
+     * @return string
+     */
+    public function setEndpoint($endpointURL)
+    {
+         $this->endpoint = $endpointURL.'/secure/txHandler.php';
+    }
     
     public function getHttpMethod()
     {
