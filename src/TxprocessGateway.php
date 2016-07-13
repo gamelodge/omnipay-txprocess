@@ -23,10 +23,16 @@ class TxprocessGateway extends AbstractGateway {
         return array(
             'sid' => '',
             'rcode' => '',
-            'ptxid' => ''
+            'ptxid' => '',
+            'endpoint'=> ''
         );
     }
   
+  
+    public function setEndpoint($value)
+    {
+        return $this->setParameter('endpoint', $value.'/secure/txHandler.php');
+    }
     
     public function getSid()
     {
