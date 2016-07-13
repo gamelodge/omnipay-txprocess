@@ -13,16 +13,6 @@ namespace Omnipay\Txprocess\Message;
 class PurchaseRequest extends AbstractRequest
 {
      
-    /**
-     * Get transaction endpoint.
-     *
-     * @return string
-     */
-    public function getEndpoint()
-    {
-        return $this->getGatewayURI().'/secure/txHandler.php';
-    }
-    
      public function getData()
     {
         $items = $this->getParameter('items');
