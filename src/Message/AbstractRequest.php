@@ -537,7 +537,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     {
         $this->getParameter('ref4');
     }
-
+    
     public function setItems($params)
     {
         $ref = isset($params['transactionReference'])? explode('-',$params['transactionReference']) : ['',''];
