@@ -3,6 +3,7 @@
 
 namespace Omnipay\Txprocess\Message;
 
+use Symfony\Component\HttpFoundation\Response as HttpResponse;
 
 Class Response extends \Omnipay\Common\Message\AbstractResponse
 {
