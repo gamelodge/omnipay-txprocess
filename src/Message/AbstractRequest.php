@@ -67,8 +67,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         $this->validate('amount', 'returnUrl');
         
         $params = $this->getParameters();
-        
-        $this->setPostbackUrl($params['returnUrl']);
+        $this->setRedirectUrl($params['postback_url']);
         $this->setItems($params);
         $this->setTimestamp(time());
         $item_quantity = $this->getParameter('item_quantity');
