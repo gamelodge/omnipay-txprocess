@@ -8,7 +8,7 @@
     "require": {
         "omnipay/common": "~2.0",
         "omnipay/paypal": "~2.0",
-        "sunra/php-simple-html-dom-parser": "v1.5.0"
+        "sunra/php-simple-html-dom-parser": "^1.5"
     },
     "require-dev": {
         "omnipay/tests": "~2.0"
